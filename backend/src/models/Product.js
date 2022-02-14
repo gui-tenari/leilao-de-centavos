@@ -3,8 +3,8 @@ const connection = require('./connection');
 
 // const createProduct = async (productsData, productId) => {
 //   const db = await connection();
-//   const products = await db.collection('products').insertOne({...productsData, productId });
-//   return { ...}
+//   const result = await db.collection('products').insertOne({...productsData, productId });
+//   return { ...productsData, productId, _id: result.insertedId };
 // };
 
 const getAllProducts = async () => {
@@ -24,4 +24,10 @@ const updateProductPrice = async (id) => {
   });
 };
 
-module.exports = { getAllProducts, updateProductPrice };
+const getProductById = async (id) => {
+  const db = await connection();
+  const product = await db.collection('products').findOne({ _id: ObjectId(id) });
+  return product;
+};
+
+module.exports = { getAllProducts, updateProductPrice, getProductById };
